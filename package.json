@@ -1,0 +1,31 @@
+{
+  "name": "pithy2",
+  "version": "0.0.1",
+  "description": "A TypeScript-friendly and human-friendly API for building DOM elements",
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts"
+  ],
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caolan/pithy2.git"
+  },
+  "keywords": [
+    "typescript",
+    "html",
+    "dom"
+  ],
+  "author": "caolan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/caolan/pithy2/issues"
+  },
+  "homepage": "https://github.com/caolan/pithy2#readme",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "compile": "tsc --pretty",
+    "build": "npm run clean && npm run compile"
+  }
+}
