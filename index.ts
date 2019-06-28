@@ -1,7 +1,15 @@
+type EventHandlers<T extends keyof HTMLElementTagNameMap> = {
+    [K in keyof HTMLElementEventMap]?: (
+        this: HTMLElementTagNameMap[T],
+        ev: HTMLElementEventMap[K]
+    ) => any
+};
+
 export type Props<T extends keyof HTMLElementTagNameMap> =
     Partial<HTMLElementTagNameMap[T]> | {
         classList?: Array<string>,
         style?: Partial<HTMLElementTagNameMap[T]['style']>,
+        events?: EventHandlers<T>
     };
 
 interface TagFn<T extends keyof HTMLElementTagNameMap> {
@@ -34,6 +42,11 @@ function tagBuilder<T extends keyof HTMLElementTagNameMap>(name: T): TagFn<T> {
                 case 'style':
                     for (const k in props[prop]) {
                         t.style.setProperty(k, props[prop][k]);
+                    }
+                    break;
+                case 'events':
+                    for (const k in props[prop]) {
+                        t.addEventListener(k, props[prop][k]);
                     }
                     break;
                 default:

@@ -41,6 +41,12 @@ html.p(["Hello, ", html.strong("world"), "!"]);
 // Normally, you can't directly set the classList property to an array,
 // but this library has a special case to handle it.
 html.div({classList: ['one', 'two']});
+
+// Adding event listeners.
+function doStuff() {
+    alert('clicked');
+}
+html.button({events: {click: doStuff}}, ['click me']);
 ```
 
 ## Typescript
@@ -51,6 +57,16 @@ html.div({src: 'http://example.com'});
 
 // This will produce a type error because className must be a string.
 html.h1({className: 123});
+
+// This will produce a type error because movementX is a property on a
+// MouseEvent and keyup produces a KeyboardEvent.
+html.input({
+    events: {
+        keyup: (ev) => {
+            console.log(ev.movementX)
+        }
+    }
+});
 ```
 
 ## Example
