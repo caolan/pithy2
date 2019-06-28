@@ -1,6 +1,7 @@
 export type Props<T extends keyof HTMLElementTagNameMap> =
     Partial<HTMLElementTagNameMap[T]> | {
-        classList?: Array<string>
+        classList?: Array<string>,
+        style?: Partial<HTMLElementTagNameMap[T]['style']>,
     };
 
 interface TagFn<T extends keyof HTMLElementTagNameMap> {
@@ -24,12 +25,20 @@ function tagBuilder<T extends keyof HTMLElementTagNameMap>(name: T): TagFn<T> {
         }
         const t = document.createElement(name);
         for (const prop in props) {
-            if (prop === 'classList') {
-                for (const name of props[prop] as Array<string>) {
-                    t[prop].add(name);
-                }
-            } else {
-                (t as any)[prop] = props[prop];
+            switch (prop) {
+                case 'classList':
+                    for (const name of props[prop] as Array<string>) {
+                        t[prop].add(name);
+                    }
+                    break;
+                case 'style':
+                    for (const k in props[prop]) {
+                        t.style.setProperty(k, props[prop][k]);
+                    }
+                    break;
+                default:
+                    (t as any)[prop] = props[prop];
+                    break;
             }
         }
         const nodes = children.map(
