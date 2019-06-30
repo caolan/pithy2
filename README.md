@@ -6,9 +6,15 @@ A less painful API for generating raw DOM Elements - inspired by
 Integrates well with Typescript - checks you're setting acceptable
 property values for the given tag etc.
 
+## Installation
+
+```
+npm install pithy2
+```
+
 ## Usage
 
-``` typescript
+``` javascript
 import * as html from "pithy2";
 
 // Empty element.
@@ -47,6 +53,19 @@ function doStuff() {
     alert('clicked');
 }
 html.button({events: {click: doStuff}}, ['click me']);
+
+// For references to nested children you can use normal assignment.
+class MyComponent {
+    updateName() {
+        this.message.textContent = `Hello, ${this.input.value}!`;
+    }
+    render() {
+        return html.div({id: 'example'}, [
+            this.message = html.span([`Hello, world!`]),
+            this.input = html.input({events: {input: () => this.updateName()}})
+        ]);
+    }
+}
 ```
 
 ## Typescript
@@ -73,7 +92,7 @@ html.input({
 
 ### Before
 
-``` typescript
+``` javascript
 function makeSection() {
     const section = document.createElement('section');
     section.id = 'mySection';
@@ -98,7 +117,7 @@ function makeSection() {
 
 ### After
 
-``` typescript
+``` javascript
 import * as html from "pithy2";
 
 function makeSection() {
