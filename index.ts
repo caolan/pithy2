@@ -41,7 +41,7 @@ function tagBuilder<T extends keyof HTMLElementTagNameMap>(name: T): TagFn<T> {
                     break;
                 case 'style':
                     for (const k in props[prop]) {
-                        t.style.setProperty(k, props[prop][k]);
+                        t[prop][k as any] = props[prop][k];
                     }
                     break;
                 case 'events':
